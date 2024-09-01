@@ -1,0 +1,57 @@
+extends ../layout.pug
+
+block content
+  //- Update Product Form
+  div(class='w-full max-w-4xl mx-auto')
+    h1(class='text-2xl font-bold mb-4') Update Product
+
+    form(id='update-form', action=`/products/${product._id}/update`, method='POST', class='bg-white p-6 shadow-md rounded-lg')
+      input(type='hidden', name='_method', value='PUT')
+      input(type='hidden', name='id', value=product._id)
+
+      div(class='mb-4')
+        label(for='title', class='block text-gray-700 font-bold mb-2') Title
+        input(type='text', id='title', name='title', value=product.title, class='w-full p-2 border border-gray-300 rounded')
+
+      div(class='mb-4')
+        label(for='description', class='block text-gray-700 font-bold mb-2') Description
+        textarea(id='description', name='description', class='w-full p-2 border border-gray-300 rounded')= product.description
+
+      div(class='mb-4')
+        label(for='stock', class='block text-gray-700 font-bold mb-2') Stock
+        input(type='number', id='stock', name='stock', value=product.stock, class='w-full p-2 border border-gray-300 rounded')
+
+      div(class='mb-4')
+        label(for='expired', class='block text-gray-700 font-bold mb-2') Expired
+        select(id='expired', name='expired', class='w-full p-2 border border-gray-300 rounded')
+          option(value='true', selected=product.expired === true) Yes
+          option(value='false', selected=product.expired === false) No
+
+      button(type='button', id='update-button', class='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600') Update Product
+
+    script.
+      document.getElementById('update-button').addEventListener('click', function() {
+          const form = document.getElementById('update-form');
+          const formData = new FormData(form);
+          
+          // Convert FormData to URLSearchParams
+          const formParams = new URLSearchParams(formData);
+
+          fetch(form.action, {
+              method: 'put',
+              body: formParams,
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+              }
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  alert('Product updated successfully');
+                  window.location.href = '/products'; // Redirect to products list or another page
+              } else {
+                  alert('Error updating product');
+              }
+          })
+            .catch(error => console.error('Error:', error));
+      });

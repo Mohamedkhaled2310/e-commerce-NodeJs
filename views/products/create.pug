@@ -1,0 +1,32 @@
+extends ../layout.pug
+block content
+    //- Form Container
+    div(class='w-full max-w-3xl bg-white shadow-md rounded-lg p-6')
+      h1(class='text-2xl font-bold mb-4') Create New Product
+
+      form(method='post')
+        //- Product Title
+        div(class='mb-4')
+          label(for='title' class='block text-gray-700 font-bold mb-2') Title
+          input(type='text', id='title', name='title', required, class='w-full p-2 border border-gray-300 rounded')
+
+        //- Description 
+        div(class='mb-4')
+          label(for='description' class='block text-gray-700 font-bold mb-2') Description
+          textarea(id='description', name='description', rows='4', required, class='w-full p-2 border border-gray-300 rounded') 
+
+        //- Stock
+        div(class='mb-4')
+          label(for='stock' class='block text-gray-700 font-bold mb-2') Stock
+          input(type='number', id='stock', name='stock', required min='0', class='w-full p-2 border border-gray-300 rounded')
+
+        //- Expired
+        div(class='mb-4')
+          label(for='expired' class='block text-gray-700 font-bold mb-2') Expired
+          select(id='expired', name='expired', class='w-full p-2 border border-gray-300 rounded')
+            option(value='true') Yes
+            option(value='false', selected) No
+
+        //- Submit Button
+        div(class='flex justify-end')
+          button(type='submit', class='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600') Submit
